@@ -47,6 +47,7 @@ public class CleanWorkspaceRequirement implements Requirement<CleanWorkspace> {
 		for (Project project : projects) {
 			project.delete(true);
 		}
+		System.out.println("================ Fulfilling Clean workspace =====================");
 	}
 
 	@Override

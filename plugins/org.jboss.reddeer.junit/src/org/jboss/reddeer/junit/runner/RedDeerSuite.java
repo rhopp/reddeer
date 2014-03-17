@@ -80,6 +80,7 @@ public class RedDeerSuite extends Suite {
 			}
 		}
 		
+		
 		log.info("RedDeer suite created");
 		return configuredSuites;
 	}

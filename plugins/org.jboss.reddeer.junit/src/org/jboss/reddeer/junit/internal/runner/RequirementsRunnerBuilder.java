@@ -1,5 +1,7 @@
 package org.jboss.reddeer.junit.internal.runner;
 
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.List;
 
 import org.jboss.reddeer.junit.logging.Logger;
@@ -9,6 +11,8 @@ import org.jboss.reddeer.junit.internal.requirement.Requirements;
 import org.jboss.reddeer.junit.internal.requirement.RequirementsBuilder;
 import org.junit.runner.Runner;
 import org.junit.runner.notification.RunListener;
+import org.junit.runners.Parameterized.Parameters;
+import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.RunnerBuilder;
 
 /**
@@ -46,7 +50,11 @@ public class RequirementsRunnerBuilder extends RunnerBuilder {
 		Requirements requirements = requirementsBuilder.build(clazz, config.getRequirementConfiguration());
 		if (requirements.canFulfill()){
 			log.info("All requirements can be fulfilled, the test will run");
-			return new RequirementsRunner(clazz, requirements, config.getId(),runListeners, beforeTestExtensions);
+			if (isParametrized(clazz)){
+				return new ParameterizedRunner(clazz, requirements, config.getId(), runListeners, beforeTestExtensions);
+			}else{
+				return new RequirementsRunner(clazz, requirements, config.getId(),runListeners, beforeTestExtensions);
+			}
 		} else {
 			log.info("All requirements cannot be fulfilled, the test will NOT run");
 			return null;
@@ -56,4 +64,16 @@ public class RequirementsRunnerBuilder extends RunnerBuilder {
 	public void setRequirementsBuilder(RequirementsBuilder requirementsBuilder) {
 		this.requirementsBuilder = requirementsBuilder;
 	}
+	
+	private boolean isParametrized(Class<?> clazz){
+		 for (Method method : clazz.getDeclaredMethods()) {
+			if (method.getAnnotation(Parameters.class)!=null){
+				if (Modifier.isPublic(method.getModifiers()) && Modifier.isStatic(method.getModifiers())){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
 }
