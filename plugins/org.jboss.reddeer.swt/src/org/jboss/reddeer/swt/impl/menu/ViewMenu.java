@@ -3,26 +3,18 @@ package org.jboss.reddeer.swt.impl.menu;
 import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.swt.widgets.MenuItem;
 import org.hamcrest.Matcher;
-import org.jboss.reddeer.swt.api.Menu;
 import org.jboss.reddeer.swt.handler.ActionContributionItemHandler;
 import org.jboss.reddeer.swt.matcher.WithMnemonicTextMatchers;
 
-/**
- * ToolbarMenu implementation
- * @author Rastislav Wagner
- *
- *@deprecated since 0.6 use ViewMenu instead.
- *
- */
-public class ToolbarMenu extends AbstractMenu implements Menu{
-	
+public class ViewMenu extends AbstractMenu {
+
 	private ActionContributionItem item;
 	
-	public ToolbarMenu(String... path){
+	public ViewMenu(String... path){
 		this(new WithMnemonicTextMatchers(path).getMatchers());
 	}
 	
-	public ToolbarMenu(Matcher<String>... matchers){
+	public ViewMenu(Matcher<String>... matchers){
 		item = ml.lookFor(ml.getToolbarMenus(), matchers);
 		this.matchers = matchers;
 	}
@@ -51,5 +43,4 @@ public class ToolbarMenu extends AbstractMenu implements Menu{
 		return ActionContributionItemHandler.getInstance().isEnabled(item);
 	}
 
-	
 }

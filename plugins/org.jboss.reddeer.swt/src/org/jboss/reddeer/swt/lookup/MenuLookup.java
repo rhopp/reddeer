@@ -53,10 +53,41 @@ public class MenuLookup {
 		}
 		return instance;
 	}
-	
+
 	/**
-	 * Provide lookup for ToolBar menu items. 
+	 * Provide lookup for ToolBar menu items.
+	 * 
+	 * @return list of contribution items related to active view menu.
+	 * 
+	 */
+
+	public List<IContributionItem> getViewMenus() {
+		IWorkbenchPart part = getActivePart(false);
+
+		List<IContributionItem> menuContributionItems = new ArrayList<IContributionItem>();
+		IMenuManager m = null;
+		try {
+			m = ((IViewSite) part.getSite()).getActionBars().getMenuManager();
+		} catch (ClassCastException e) {
+			throw new SWTLayerException(
+					"Trying to found ViewMenu when no view is active", e);
+		}
+		if (m instanceof MenuManager) {
+			menuContributionItems.addAll(Arrays.asList(((MenuManager) m)
+					.getItems()));
+		}
+		if (menuContributionItems.isEmpty()) {
+			throw new SWTLayerException("No Menu found in view");
+		}
+		return menuContributionItems;
+	}
+
+	/**
+	 * Provide lookup for ToolBar menu items.
+	 * 
 	 * @return list of MenuManager instances related to toolbar menus
+	 * @deprecated since 0.6 use {@link #getViewMenus()}
+	 * 
 	 */
 	public List<IContributionItem> getToolbarMenus(){	
 		IWorkbenchPart part = getActivePart(false);
