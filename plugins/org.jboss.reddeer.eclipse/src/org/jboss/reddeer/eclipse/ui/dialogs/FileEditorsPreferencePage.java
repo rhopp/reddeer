@@ -15,6 +15,8 @@ import org.jboss.reddeer.swt.impl.button.RadioButton;
 import org.jboss.reddeer.swt.impl.shell.DefaultShell;
 import org.jboss.reddeer.swt.impl.table.DefaultTable;
 import org.jboss.reddeer.swt.impl.text.LabeledText;
+import org.jboss.reddeer.swt.impl.tree.DefaultTree;
+import org.jboss.reddeer.swt.impl.tree.DefaultTreeItem;
 import org.jboss.reddeer.core.matcher.WithMnemonicTextMatcher;
 
 /**
@@ -169,7 +171,7 @@ public class FileEditorsPreferencePage extends PreferencePage {
 		else{
 			new RadioButton("External programs").click();
 		}
-		new DefaultTable().select(associatedEditor);
+		new DefaultTree().selectItems(new DefaultTreeItem(associatedEditor));
 		new OkButton().click();
 	}
 	/**

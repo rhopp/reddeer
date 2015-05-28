@@ -59,7 +59,9 @@ public class ConsoleViewTest {
 
 	@AfterClass
 	public static void tearDownClass() {
-		DeleteUtils.forceProjectDeletion(new PackageExplorer().getProject(TEST_PROJECT_NAME),true);
+		PackageExplorer packageExplorer = new PackageExplorer();
+		packageExplorer.open();
+		DeleteUtils.forceProjectDeletion(packageExplorer.getProject(TEST_PROJECT_NAME),true);
 	}
 
 	private void runTestClassAndWaitToFinish() {
@@ -184,6 +186,7 @@ public class ConsoleViewTest {
 
 	private static void createTestProject() {
 		PackageExplorer packageExplorer = new PackageExplorer();
+		packageExplorer.open();
 		if (!packageExplorer.containsProject(TEST_PROJECT_NAME)) {
 			createJavaProject();
 			createJavaClass(TEST_CLASS_NAME, "System.out.print(\"Hello World\");");
@@ -228,7 +231,9 @@ public class ConsoleViewTest {
 	}
 
 	private static void runTestClass(String name) {
-		new PackageExplorer().getProject(TEST_PROJECT_NAME).getProjectItem("src", "test", name + ".java").select();
+		PackageExplorer packageExplorer = new PackageExplorer();
+		packageExplorer.open();
+		packageExplorer.getProject(TEST_PROJECT_NAME).getProjectItem("src", "test", name + ".java").select();
 		RegexMatcher[] array = { new RegexMatcher("Run.*"), new RegexMatcher("Run As.*"),
 				new RegexMatcher(".*Java Application.*") };
 		WithTextMatchers m = new WithTextMatchers(array);

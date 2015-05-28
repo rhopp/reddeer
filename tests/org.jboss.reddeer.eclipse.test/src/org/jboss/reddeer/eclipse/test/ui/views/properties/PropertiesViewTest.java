@@ -34,7 +34,9 @@ public class PropertiesViewTest {
 		NewJavaProjectWizardPage page1 =new NewJavaProjectWizardPage();
 		page1.setProjectName(PropertiesViewTest.TEST_PROJECT_NAME);
 		dialog.finish();
-		new PackageExplorer().getProject(PropertiesViewTest.TEST_PROJECT_NAME)
+		PackageExplorer packageExplorer = new PackageExplorer();
+		packageExplorer.open();
+		packageExplorer.getProject(PropertiesViewTest.TEST_PROJECT_NAME)
 				.getTreeItem().select();
 	}
 	
@@ -55,6 +57,7 @@ public class PropertiesViewTest {
 		PropertiesView propertiesView = new PropertiesView();
 		propertiesView.open();
 		propertiesView.toggleShowCategories(true);
+		new PackageExplorer().getProject(TEST_PROJECT_NAME).select();
 		List<PropertiesViewProperty> properties = propertiesView.getProperties();
 		assertTrue("Expected cound of properties was 8 but is" + properties.size() ,
 			properties.size() == 8);

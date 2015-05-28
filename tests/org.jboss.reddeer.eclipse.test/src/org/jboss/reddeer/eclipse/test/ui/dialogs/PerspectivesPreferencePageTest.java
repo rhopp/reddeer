@@ -36,15 +36,9 @@ public class PerspectivesPreferencePageTest {
 		perspectivesPreferencePage.checkOpenNewPerspectiveInSameWindow();
 		assertTrue(perspectivesPreferencePage
 				.isOpenNewPerspectiveInSameWindow());
-		perspectivesPreferencePage.checkOpenNewViewAsFastView();
-		assertTrue(perspectivesPreferencePage.isOpenNewViewAsFastView());
-		perspectivesPreferencePage.checkOpenNewViewWithinPerspective();
-		assertTrue(perspectivesPreferencePage.isOpenNewViewWithinPerspective());
 		perspectivesPreferencePage.checkPromptOpenAssociatedPerspective();
 		assertTrue(perspectivesPreferencePage
 				.isPromptOpenAssociatedPerspective());
-		perspectivesPreferencePage.setHideEmptyFastViewBar(true);
-		assertTrue(perspectivesPreferencePage.isHideEmptyFastViewBar());
 
 		preferencesDialog.cancel();
 	}

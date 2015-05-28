@@ -50,6 +50,7 @@ public class ViewHandler {
 	 * @param viewPart view part to set focus on
 	 */
 	public void setFocus(final IViewPart viewPart) {
+		System.out.println(viewPart.getTitle());
 		Display.syncExec(new Runnable() {
 			@Override
 			public void run() {
