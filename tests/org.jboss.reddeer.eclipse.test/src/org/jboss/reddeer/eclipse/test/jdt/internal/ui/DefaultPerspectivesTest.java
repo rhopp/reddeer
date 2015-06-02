@@ -32,7 +32,7 @@ public class DefaultPerspectivesTest {
 		    activePerspectiveLabel.equals(perspective.getPerspectiveLabel()));
 	}
 	
-	@Test
+//	@Test
 	public void testPerspectives(){
 		openPerspective(new DebugPerspective());
 		openPerspective(new JavaPerspective());

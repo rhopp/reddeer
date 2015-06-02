@@ -80,6 +80,7 @@ public class ProblemsViewTest {
 	public void tearDown() {
 		pkgExplorer.open();
 		DeleteUtils.forceProjectDeletion(pkgExplorer.getProject(PROJECT_NAME),true);
+		new ProblemsView().close();
 	}
 	
 	@Test

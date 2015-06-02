@@ -10,8 +10,10 @@ import org.jboss.reddeer.eclipse.exception.EclipseLayerException;
 import org.jboss.reddeer.eclipse.rse.ui.view.System;
 import org.jboss.reddeer.eclipse.rse.ui.wizard.NewConnectionWizardDialog;
 import org.jboss.reddeer.eclipse.rse.ui.wizard.NewConnectionWizardSelectionPage.SystemType;
+import org.jboss.reddeer.eclipse.ui.views.log.LogView;
 import org.jboss.reddeer.swt.api.Shell;
 import org.jboss.reddeer.swt.impl.shell.DefaultShell;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class SystemViewTest extends SystemViewTestCase {
@@ -19,6 +21,10 @@ public class SystemViewTest extends SystemViewTestCase {
 	private static final String SYSTEM_A = "Test Remote System A";
 	private static final String SYSTEM_B = "Test Remote System B";
 
+	@BeforeClass
+	public static void setupClass(){
+		new LogView().close();
+	}
 	
 	@Test
 	public void newConnection(){

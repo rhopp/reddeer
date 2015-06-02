@@ -34,7 +34,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(RedDeerSuite.class)
-@OpenPerspective(JavaPerspective.class)
+//@OpenPerspective(JavaPerspective.class)
 public abstract class AbstractExplorerItemTest {
 
 	public static final String PROJECT_NAME = "ProjectItemTestProject";
