@@ -23,7 +23,10 @@ public class SystemViewTest extends SystemViewTestCase {
 
 	@BeforeClass
 	public static void setupClass(){
-		new LogView().close();
+		LogView logView = new LogView();
+		if (logView.isOpened()){
+			new LogView().close();
+		}
 	}
 	
 	@Test
