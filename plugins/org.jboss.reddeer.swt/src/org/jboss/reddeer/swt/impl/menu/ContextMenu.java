@@ -43,10 +43,10 @@ public class ContextMenu extends AbstractMenu implements Menu {
 		menuItem = ml.lookFor(ml.getTopMenuMenuItemsFromFocus(),matchers);
 		if(menuItem == null){
 			log.info("No menu item found, looking for contribution item");
-			actionItem = ml.lookFor(ml.getMenuContributionItems(), matchers);
-			if (actionItem == null){
+//			actionItem = ml.lookFor(ml.getMenuContributionItems(), matchers);
+//			if (actionItem == null){
 				throw new SWTLayerException("Contribution item not found");
-			}
+//			}
 		}
 		this.matchers = matchers;
 		

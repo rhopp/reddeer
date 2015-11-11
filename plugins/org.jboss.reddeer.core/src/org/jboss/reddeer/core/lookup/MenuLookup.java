@@ -191,6 +191,7 @@ public class MenuLookup {
 		
 		//Send MenuDetect event. Some menus doesn't exist before that..
 		WidgetHandler.getInstance().notify(SWT.MenuDetect, control);
+		sendShowUI(control);
 		
 		final Menu menu = getControlMenu(control);
 		
