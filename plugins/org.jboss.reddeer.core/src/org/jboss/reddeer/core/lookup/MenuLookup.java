@@ -191,16 +191,27 @@ public class MenuLookup {
 		
 		//Send MenuDetect event. Some menus doesn't exist before that..
 		WidgetHandler.getInstance().notify(SWT.MenuDetect, control);
-		sendHide(control.getMenu(), true);
-		sendShowUI(control.getMenu());
 		
 		final Menu menu = getControlMenu(control);
+		
+		if (menu == null){
+			throw new CoreLayerException(
+					"Could not find top menu items, menu doesn't exist or wrong focus");
+		}
+//		Display.syncExec(new Runnable() {
+//			
+//			@Override
+//			public void run() {
+//				sendHide(menu, true);
+//				sendShowUI(menu);	
+//			}
+//		});
 		
 		items = Display.syncExec(new ResultRunnable<MenuItem[]>() {
 			@Override
 			public MenuItem[] run() {
 				sendHide(menu, true);
-				sendShowUI(menu);				
+				sendShowUI(menu);	
 				return menu.getItems();
 			}
 		});
@@ -212,7 +223,7 @@ public class MenuLookup {
 
 		return items;
 	}
-	
+
 	/**
 	 * Gets menu items from active shell menu bar.
 	 * @return array of top menu items of active shell
