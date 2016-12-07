@@ -16,6 +16,7 @@ import org.eclipse.swt.widgets.Widget;
 import org.jboss.reddeer.common.logging.Logger;
 import org.jboss.reddeer.core.lookup.WidgetLookup;
 import org.jboss.reddeer.core.util.Display;
+import org.jboss.reddeer.swt.exception.SWTLayerException;
 
 /**
  * Class for operating with keyboard
@@ -52,6 +53,29 @@ abstract public class Keyboard {
 		}
 	}
 	
+	private void invokeKeyCombinationForOneCharacter(char c, int... keys){
+		if (keys.length != 2){
+			throw new SWTLayerException("Chybka: keys.length !=2");
+		}
+		int modifiers = keys[0];
+		if (modifiers == (SWT.CTRL | SWT.ALT)){
+			final Widget w = WidgetLookup.getInstance().getFocusControl();
+			log.info("Invoke key combination: ");
+			for (int i=0; i<keys.length; i++){
+				log.info("    As char:" + (char) keys[i] + ", as int:" + keys[i]);
+				sync();
+				Display.getDisplay().post(keyEvent(keys[i], SWT.KeyDown, w, c));
+			}
+			for (int i=keys.length-1; i>=0; i--){
+				sync();
+				Display.getDisplay().post(keyEvent(keys[i], SWT.KeyUp, w, c));
+				sync();
+			}
+		}else{
+			invokeKeyCombination(keys);
+		}
+	}
+	
 	/**
 	 * Types given text.
 	 *
@@ -61,7 +85,7 @@ abstract public class Keyboard {
 	public void type(String text){
 		log.info("Type text \"" + text + "\"");
 		for (char c : text.toCharArray()) {
-			invokeKeyCombination(DefaultKeyboardLayout.getInstance().getKeyCombination(c));
+			invokeKeyCombinationForOneCharacter(c, DefaultKeyboardLayout.getInstance().getKeyCombination(c));
 		}
 	}
 	
@@ -156,11 +180,20 @@ abstract public class Keyboard {
 	}
 	
 	private Event keyEvent(int key, int eventType, Widget w){
+		return keyEvent(key, eventType, w, (char) key);
+	}
+	
+	private Event keyEvent(int key, int eventType, Widget w, char character){
+		System.out.println("Creating key event with keyCode: "+key+" and character: "+character);
 		Event e = new Event();
 		e.keyCode = key;
-		e.character = (char) key;
+		e.character = (char) character;
 		e.type = eventType;
 		e.widget = w;
+		if (character == '>'){
+			System.out.println("ALT!");
+			e.stateMask=SWT.ALT;
+		}
 		return e;
 	}
 	

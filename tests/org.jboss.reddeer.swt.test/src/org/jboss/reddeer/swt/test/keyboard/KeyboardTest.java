@@ -82,8 +82,8 @@ public class KeyboardTest {
 //		KeyboardFactory.getKeyboard().type("+ěščřžýáíé=1234567890%ú)ů§,.-?:_!");
 //		assertEquals("+ěščřžýáíé=1234567890%ú)ů§,.-?:_!", getText());
 		
-		KeyboardFactory.getKeyboard().type("ů<");
-		assertEquals("ů", getText());
+		KeyboardFactory.getKeyboard().type("<>");
+		assertEquals("<>", getText());
 	}
 //	
 //	@Test
@@ -121,13 +121,15 @@ public class KeyboardTest {
 					
 					@Override
 					public void keyReleased(KeyEvent arg0) {
-						System.out.println(arg0);
-						
+						System.out.println("KeyCode: "+arg0.keyCode);
+						System.out.println("Character: "+arg0.character);
+						System.out.println("State mask: "+arg0.stateMask);
+						System.out.println();
 					}
 					
 					@Override
 					public void keyPressed(KeyEvent arg0) {
-						System.out.println(arg0);
+//						System.out.println(arg0);
 						
 					}
 				});
