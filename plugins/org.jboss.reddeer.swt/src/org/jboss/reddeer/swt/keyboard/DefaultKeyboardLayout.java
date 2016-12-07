@@ -14,6 +14,9 @@ import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -53,10 +56,27 @@ public class DefaultKeyboardLayout {
 	 * Constructor of the class.
 	 */
 	public DefaultKeyboardLayout() {
-		ClassLoader classLoader = DefaultKeyboardLayout.class.getClassLoader();
-		InputStream in = classLoader.getResourceAsStream(toFolder(myPackage()
-				+ "/default")
-				+ ".keyboard");
+		String kbLayout = System.getProperty("rd.keyboardLayout");
+		if (kbLayout == null) {
+			ClassLoader classLoader = DefaultKeyboardLayout.class.getClassLoader();
+			InputStream in = classLoader.getResourceAsStream(toFolder(myPackage() + "/default") + ".keyboard");
+			loadKeyboardLayoutFromInputStream(in);
+		} else {
+			try {
+				loadKeyboardLayoutFromFile(new File(kbLayout));
+			} catch (FileNotFoundException e) {
+				throw new SWTLayerException("There was an error processing provided keyboard layout file " + kbLayout,
+						e);
+			}
+		}
+
+	}
+	
+	private void loadKeyboardLayoutFromFile(File layoutFile) throws FileNotFoundException{
+		loadKeyboardLayoutFromInputStream(new FileInputStream(layoutFile));
+	}
+	
+	private void loadKeyboardLayoutFromInputStream(InputStream in) {
 		BufferedReader br = null;
 		try {
 			br = new BufferedReader(new InputStreamReader(in, "UTF-8"));

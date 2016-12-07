@@ -13,6 +13,8 @@ package org.jboss.reddeer.swt.test.keyboard;
 import static org.junit.Assert.assertEquals;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.jboss.reddeer.junit.runner.RedDeerSuite;
@@ -44,59 +46,69 @@ public class KeyboardTest {
 		});
 	}
 	
-	@Test
-	public void typingWithShiftTest(){
-		openTestingShell();
-		KeyboardFactory.getKeyboard().type("{@Test}");
-		assertEquals("{@Test}", getText());
-	}
+//	@Test
+//	public void typingWithShiftTest(){
+//		openTestingShell();
+//		KeyboardFactory.getKeyboard().type("{@Test}");
+//		assertEquals("{@Test}", getText());
+//	}
+//	
+//	@Test
+//	public void typingTest() {
+//		openTestingShell();
+//		KeyboardFactory.getKeyboard().type("test123");
+//		assertEquals("test123", getText());
+//	}
+//	
+//	@Test
+//	public void keyCombinationTest(){
+//		new DefaultShell();
+//		KeyboardFactory.getKeyboard().invokeKeyCombination(SWT.CONTROL, 'h');
+//		new DefaultShell("Search").close();
+//	}
+//	
+//	@Test
+//	public void selectionTest(){
+//		openTestingShell();
+//		KeyboardFactory.getKeyboard().type("test");
+//		KeyboardFactory.getKeyboard().select(2, true);
+//		KeyboardFactory.getKeyboard().type(SWT.DEL);
+//		assertEquals("te", getText());
+//	}
 	
 	@Test
-	public void typingTest() {
+	public void myTypingTest(){
 		openTestingShell();
-		KeyboardFactory.getKeyboard().type("test123");
-		assertEquals("test123", getText());
+//		KeyboardFactory.getKeyboard().type("+ěščřžýáíé=1234567890%ú)ů§,.-?:_!");
+//		assertEquals("+ěščřžýáíé=1234567890%ú)ů§,.-?:_!", getText());
+		
+		KeyboardFactory.getKeyboard().type("ů<");
+		assertEquals("ů", getText());
 	}
-	
-	@Test
-	public void keyCombinationTest(){
-		new DefaultShell();
-		KeyboardFactory.getKeyboard().invokeKeyCombination(SWT.CONTROL, 'h');
-		new DefaultShell("Search").close();
-	}
-	
-	@Test
-	public void selectionTest(){
-		openTestingShell();
-		KeyboardFactory.getKeyboard().type("test");
-		KeyboardFactory.getKeyboard().select(2, true);
-		KeyboardFactory.getKeyboard().type(SWT.DEL);
-		assertEquals("te", getText());
-	}
-	
-	@Test
-	public void copyPasteTest(){
-		openTestingShell();
-		Keyboard keyboard = KeyboardFactory.getKeyboard();
-		keyboard.type("test");
-		keyboard.select(2, true);
-		keyboard.writeToClipboard(false);
-		keyboard.moveCursor(5, true);
-		keyboard.pasteFromClipboard();
-		assertEquals("sttest", getText());
-	}
-	
-	@Test
-	public void cutPasteTest(){
-		openTestingShell();
-		Keyboard keyboard = KeyboardFactory.getKeyboard();
-		keyboard.type("test");
-		keyboard.select(2, true);
-		keyboard.writeToClipboard(true);
-		keyboard.moveCursor(5, true);
-		keyboard.pasteFromClipboard();
-		assertEquals("stte", getText());
-	}
+//	
+//	@Test
+//	public void copyPasteTest(){
+//		openTestingShell();
+//		Keyboard keyboard = KeyboardFactory.getKeyboard();
+//		keyboard.type("test");
+//		keyboard.select(2, true);
+//		keyboard.writeToClipboard(false);
+//		keyboard.moveCursor(5, true);
+//		keyboard.pasteFromClipboard();
+//		assertEquals("sttest", getText());
+//	}
+//	
+//	@Test
+//	public void cutPasteTest(){
+//		openTestingShell();
+//		Keyboard keyboard = KeyboardFactory.getKeyboard();
+//		keyboard.type("test");
+//		keyboard.select(2, true);
+//		keyboard.writeToClipboard(true);
+//		keyboard.moveCursor(5, true);
+//		keyboard.pasteFromClipboard();
+//		assertEquals("stte", getText());
+//	}
 
 	private void openTestingShell(){
 		Display.syncExec(new Runnable() {
@@ -105,6 +117,20 @@ public class KeyboardTest {
 			public void run() {
 				Shell shell = ShellTestUtils.createShell(SHELL_TITLE);
 				text = new Text(shell, SWT.NONE);
+				text.addKeyListener(new KeyListener() {
+					
+					@Override
+					public void keyReleased(KeyEvent arg0) {
+						System.out.println(arg0);
+						
+					}
+					
+					@Override
+					public void keyPressed(KeyEvent arg0) {
+						System.out.println(arg0);
+						
+					}
+				});
 				shell.layout();
 			}
 		});
