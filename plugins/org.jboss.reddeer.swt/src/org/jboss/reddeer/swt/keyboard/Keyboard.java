@@ -53,6 +53,23 @@ abstract public class Keyboard {
 		}
 	}
 	
+	public void invokeMyKeyCommbination(){
+		final Widget w = WidgetLookup.getInstance().getFocusControl();
+		sync();
+		Display.getDisplay().post(keyEvent(SWT.CTRL, SWT.KeyDown, w));
+		sync();
+		Display.getDisplay().post(keyEvent(SWT.ALT, SWT.KeyDown, w));
+		sync();
+		Display.getDisplay().post(keyEvent('w', SWT.KeyDown, w, '|'));
+		sync();
+		Display.getDisplay().post(keyEvent('w', SWT.KeyUp, w, '|'));
+		sync();
+		Display.getDisplay().post(keyEvent(SWT.ALT, SWT.KeyUp, w));
+		sync();
+		Display.getDisplay().post(keyEvent(SWT.CTRL, SWT.KeyUp, w));
+		sync();
+	}
+	
 	private void invokeKeyCombinationForOneCharacter(char c, int... keys){
 		if (keys.length != 2){
 			throw new SWTLayerException("Chybka: keys.length !=2");

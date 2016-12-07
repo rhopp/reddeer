@@ -82,8 +82,10 @@ public class KeyboardTest {
 //		KeyboardFactory.getKeyboard().type("+ěščřžýáíé=1234567890%ú)ů§,.-?:_!");
 //		assertEquals("+ěščřžýáíé=1234567890%ú)ů§,.-?:_!", getText());
 		
-		KeyboardFactory.getKeyboard().type("<>");
-		assertEquals("<>", getText());
+//		KeyboardFactory.getKeyboard().type("<>");
+//		assertEquals("<>", getText());
+		KeyboardFactory.getKeyboard().invokeMyKeyCommbination();
+		System.out.println("");
 	}
 //	
 //	@Test
